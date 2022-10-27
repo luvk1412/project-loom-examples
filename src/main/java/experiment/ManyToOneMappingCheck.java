@@ -13,9 +13,6 @@ public class ManyToOneMappingCheck {
   private static final int threadSleepMs = 10;
   private static final String separator = "\n\n Completed \n\n";
 
-  /**
-   * Helps in checking that same virtual thread after sleep is picked up by another platform thread.
-   */
   public static void main(String[] args) throws InterruptedException {
     manyToOneNormalCheck();
     System.out.println(separator);
@@ -28,6 +25,9 @@ public class ManyToOneMappingCheck {
     manyToOneSynchronizedBlockingCheck();
   }
 
+  /**
+   * Helps in checking that same virtual thread after sleep is often picked up by another platform thread.
+   */
   private static void manyToOneNormalCheck() throws InterruptedException {
     List<Thread> threads = new ArrayList<>();
     Map<Integer, Set<String>> threadNamesMap = new ConcurrentHashMap<>();
@@ -48,6 +48,9 @@ public class ManyToOneMappingCheck {
     printThreadNamesMap("NormalCheck", threadNamesMap);
   }
 
+  /**
+   * Helps in checking that locking non-blocking code doesn't lead to thread pinning.
+   */
   private static void manyToOneLockNonBlockingCheck() throws InterruptedException {
     ReentrantLock lock = new ReentrantLock();
     List<Thread> threads = new ArrayList<>();
@@ -73,6 +76,9 @@ public class ManyToOneMappingCheck {
     printThreadNamesMap("LockNonBlockingCheck", threadNamesMap);
   }
 
+  /**
+   * Helps in checking that locking blocking code doesn't lead to thread pinning.
+   */
   private static void manyToOneLockBlockingCheck() throws InterruptedException {
     ReentrantLock lock = new ReentrantLock();
     List<Thread> threads = new ArrayList<>();
@@ -96,6 +102,9 @@ public class ManyToOneMappingCheck {
     printThreadNamesMap("LockBlockingCheck", threadNamesMap);
   }
 
+  /**
+   * Helps in checking that synchronized blocking code doesn't lead to thread pinning.
+   */
   private static void manyToOneSynchronizedNonBlockingCheck() throws InterruptedException {
     List<Thread> threads = new ArrayList<>();
     Map<Integer, Set<String>> threadNamesMap = new ConcurrentHashMap<>();
@@ -121,6 +130,9 @@ public class ManyToOneMappingCheck {
     printThreadNamesMap("SynchronizedNonBlocking", threadNamesMap);
   }
 
+  /**
+   * Helps in checking that synchronized blocking code leads to thread pinning.
+   */
   private static void manyToOneSynchronizedBlockingCheck() throws InterruptedException {
     List<Thread> threads = new ArrayList<>();
     Map<Integer, Set<String>> threadNamesMap = new ConcurrentHashMap<>();
