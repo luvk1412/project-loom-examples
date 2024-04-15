@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class ContinuationYield {
 
-  // --add-exports java.base/jdk.internal.vm=ALL-UNNAMED
+  // --add-exports java.base/jdk.internal.vm=ALL-UNNAMED   add this to VM options in run configuration
 
   public static void main(String[] args) throws InterruptedException {
     continuationOnMainThread();
